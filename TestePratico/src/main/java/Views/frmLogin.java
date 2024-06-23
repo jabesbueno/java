@@ -155,6 +155,7 @@ public class frmLogin extends javax.swing.JFrame {
         frmCadastroUsuario usuario = new frmCadastroUsuario();
  
         usuario.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed

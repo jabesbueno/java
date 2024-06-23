@@ -4,6 +4,7 @@
  */
 package Views;
 
+import Controllers.controllerUsuario;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -180,10 +181,40 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
         if(nome.equals("") || email.equals("") || senha.equals(""))
         {
             JOptionPane optionPane = new JOptionPane();
-            optionPane.setMessage("É necessário preencher todos os campos para cadastrar o usuário!");
+            optionPane.setMessage("É necessário preencher todos os campos!");
             optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
             JDialog dialog = optionPane.createDialog(null, "Atenção");
             dialog.setVisible(true);
+        } else {
+            try{
+                controllerUsuario controller = new controllerUsuario();
+                if(controller.cadastrar(nome, email, senha).equals("Usuário cadastrado com sucesso!")){
+                    JOptionPane optionPane = new JOptionPane();
+                    optionPane.setMessage("Usuário cadastrado com sucesso!");
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = optionPane.createDialog(null, "Sucesso");
+                    dialog.setVisible(true);
+                    
+                    frmLogin login = new frmLogin();
+ 
+                    login.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane optionPane = new JOptionPane();
+                    optionPane.setMessage("Erro ao cadastrar usuário");
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = optionPane.createDialog(null, "Atenção");
+                    dialog.setVisible(true);
+                }
+                
+            } catch(Exception ex){
+                JOptionPane optionPane = new JOptionPane();
+                optionPane.setMessage("Erro ao cadastrar usuário: " + ex);
+                optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                JDialog dialog = optionPane.createDialog(null, "Atenção");
+                dialog.setVisible(true);
+            }
+            
         }
         
         
@@ -194,6 +225,7 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
         frmLogin login = new frmLogin();
  
         login.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
