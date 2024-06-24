@@ -13,8 +13,6 @@ import Models.classUsuario;
 public class controllerUsuario {
     public String cadastrar(String nome, String email, String senha) {
         try {
-            
-            
             classUsuario usuario = new classUsuario();
             usuario.setNome(nome);
             usuario.setEmail(email);
@@ -23,6 +21,17 @@ public class controllerUsuario {
             return "Usuário cadastrado com sucesso!";
         } catch(Exception ex){
             return "Erro ao cadastar usuário: " + ex;
+        }
+        
+    }
+    
+    public classUsuario logar(String email, String senha) {
+        try {
+            classUsuario usuario = new classUsuario();
+            usuario = usuario.verificarLogin(email, senha);
+            return usuario;
+        } catch(Exception ex){
+            return null;
         }
         
     }

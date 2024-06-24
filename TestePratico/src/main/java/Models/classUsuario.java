@@ -82,19 +82,18 @@ public class classUsuario {
         try {
             String sql = "select * from tbusuario where email=? and senha=?";
             PreparedStatement stmt = conexao.query(sql);
-            stmt.setString(2, email);
-            stmt.setString(3, senha);
-            stmt.executeUpdate();
+            stmt.setString(1, email);
+            stmt.setString(2, senha);
             ResultSet rs = stmt.executeQuery();
-            conexao.disconect();
             
-            if(rs != null) {
-                usuario.idUsuario = rs.getInt("idUsuario");
-                usuario.nome = rs.getString("nome");
-                usuario.email = rs.getString("email");
-                usuario.senha = rs.getString("senha");
+            while (rs.next()) {
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
             }
             
+            conexao.disconect();
             return usuario;
 	}catch (SQLException ex) {
             ex.printStackTrace();

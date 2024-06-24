@@ -1,7 +1,13 @@
 create database testePratico
     with
     owner = postgres
-    encoding = 'UTF8';
+    encoding = 'UTF8'
+    lc_collate = 'c'
+    lc__ctype = 'c'
+    locale_provider = 'libc'
+    tablespace = pg_default
+    connection limit -1
+    is_template = false;
 
 create table tbUsuario(
 	 idUsuario serial,
@@ -14,7 +20,7 @@ create table tbUsuario(
  create table tbFuncionario(
 	 idFuncionario serial,
 	 nome varchar(50),
-	 dataAdmissao date,
+	 dataAdmissao varchar(10),
 	 salario float,
 	 status varchar(10),
 	 usuario integer,

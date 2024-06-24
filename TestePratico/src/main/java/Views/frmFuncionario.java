@@ -4,22 +4,36 @@
  */
 package Views;
 
+import Controllers.controllerFuncionario;
+import Models.classFuncionario;
+import Models.classUsuario;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Jabes Bueno
  */
 public class frmFuncionario extends javax.swing.JFrame {
-
+    Integer id;
+    String logado;
+    
     /**
      * Creates new form frmFuncionario
      */
-    public frmFuncionario() {
+    public frmFuncionario(classUsuario usuario) {
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Funcionário");
  
@@ -28,6 +42,32 @@ public class frmFuncionario extends javax.swing.JFrame {
         setResizable(false);
         this.setLocationRelativeTo(null);
         setVisible(true);
+        
+        classUsuario login = usuario;
+        id = login.getIdUsuario();
+        lblLogado.setText(login.getNome());
+        carregarTabela();
+    }
+    
+    public void carregarTabela(){
+        controllerFuncionario funcionario = new controllerFuncionario();
+        List<classFuncionario> funcionarios = new ArrayList<classFuncionario>();
+        funcionarios =  funcionario.listarFuncionarios();
+        int i = 0;
+        for(classFuncionario fun : funcionarios) {
+            tbFuncionarios.setValueAt(fun.getIdFuncionario(),i,0);
+            tbFuncionarios.setValueAt(fun.getNome(),i,1);
+            tbFuncionarios.setValueAt(fun.getDataAdmissao(),i,2);
+            tbFuncionarios.setValueAt(fun.getSalario(),i,3);
+            tbFuncionarios.setValueAt(fun.getStatus(),i,4);
+            i++;
+        } 
+    }
+    
+    public void limparCampos(){
+        txtNome.setText("");
+        txtAdmissao.setText("");
+        txtDinheiro.setText("");
     }
 
     /**
@@ -45,11 +85,15 @@ public class frmFuncionario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        txtSalario = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
         txtAdmissao = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         cmbStatus = new javax.swing.JComboBox<>();
+        lblLogado = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbFuncionarios = new javax.swing.JTable();
+        btnSair = new javax.swing.JButton();
+        txtDinheiro = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,9 +118,6 @@ public class frmFuncionario extends javax.swing.JFrame {
         txtNome.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
         txtNome.setName("txtNome"); // NOI18N
 
-        txtSalario.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
-        txtSalario.setName("txtSalario"); // NOI18N
-
         btnCadastrar.setBackground(new java.awt.Color(0, 204, 204));
         btnCadastrar.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
         btnCadastrar.setText("Cadastrar");
@@ -87,7 +128,11 @@ public class frmFuncionario extends javax.swing.JFrame {
             }
         });
 
-        txtAdmissao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        try {
+            txtAdmissao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         txtAdmissao.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
@@ -96,35 +141,107 @@ public class frmFuncionario extends javax.swing.JFrame {
         cmbStatus.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Verdadeiro", "Falso" }));
 
+        lblLogado.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
+
+        tbFuncionarios.setFont(new java.awt.Font("Marker Felt", 0, 12)); // NOI18N
+        tbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Id", "Nome", "Data", "Salário", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tbFuncionarios);
+
+        btnSair.setBackground(new java.awt.Color(0, 204, 204));
+        btnSair.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
+        txtDinheiro.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout frmFuncionarioLayout = new javax.swing.GroupLayout(frmFuncionario);
         frmFuncionario.setLayout(frmFuncionarioLayout);
         frmFuncionarioLayout.setHorizontalGroup(
             frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frmFuncionarioLayout.createSequentialGroup()
-                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(19, 19, 19)
+                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(frmFuncionarioLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frmFuncionarioLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnCadastrar)
-                                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(frmFuncionarioLayout.createSequentialGroup()
+                                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(frmFuncionarioLayout.createSequentialGroup()
-                                        .addComponent(txtAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtSalario))
-                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(371, 371, 371)))
+                                        .addGap(137, 137, 137)
+                                        .addComponent(jLabel5))
+                                    .addComponent(txtAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtDinheiro, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(btnCadastrar))
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+            .addGroup(frmFuncionarioLayout.createSequentialGroup()
+                .addGap(326, 326, 326)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(92, 92, 92)
+                .addComponent(lblLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSair)
                 .addContainerGap())
         );
         frmFuncionarioLayout.setVerticalGroup(
@@ -133,24 +250,33 @@ public class frmFuncionario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(frmFuncionarioLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(58, 58, 58))
-                    .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
-                .addGap(27, 27, 27)
-                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(30, 30, 30)
-                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(btnCadastrar)
-                .addContainerGap(106, Short.MAX_VALUE))
+                        .addComponent(btnSair)
+                        .addGap(24, 24, 24))
+                    .addComponent(jLabel1)
+                    .addComponent(lblLogado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(frmFuncionarioLayout.createSequentialGroup()
+                        .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(27, 27, 27)
+                        .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtDinheiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(frmFuncionarioLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(frmFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frmFuncionarioLayout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(btnCadastrar))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,23 +295,61 @@ public class frmFuncionario extends javax.swing.JFrame {
 
     private void btnCadastrarCadastrarUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarCadastrarUsuario
         // TODO add your handling code here:
-        DateTimeFormatter format = DateTimeFormatter. ofPattern("dd/MM/yyyy");
         String nome = txtNome.getText();
-        LocalDate dtAdmissao = LocalDate.parse(txtAdmissao.getText(),format);
-        String salario = txtSalario.getText();
+        String dataadmissao = txtAdmissao.getText();
+        Double salario;
+        if(!txtDinheiro.getText().matches("[0-9]+")){
+            salario = 0.0;
+        } else {
+            salario = Double.parseDouble(txtDinheiro.getText());
+        }
         String status = cmbStatus.getSelectedItem().toString();
         
         //Validando campos preenchidos
-        if(nome.equals("") || dtAdmissao.equals("Selecione") || salario.equals("") || status.equals(""))
+        if(nome.equals("") || dataadmissao.equals("") || salario == 0 || status.equals("Selecione"))
         {
             JOptionPane optionPane = new JOptionPane();
-            optionPane.setMessage("É necessário preencher todos os campos para cadastrar o usuário!");
+            optionPane.setMessage("É necessário preencher todos os campos corretamente para cadastrar o funcionário!");
             optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
             JDialog dialog = optionPane.createDialog(null, "Atenção");
             dialog.setVisible(true);
+        } else {
+            try{
+                controllerFuncionario controller = new controllerFuncionario();
+                if(controller.cadastrar(nome, dataadmissao, salario, status, id).equals("Funcionário cadastrado com sucesso!")){
+                    JOptionPane optionPane = new JOptionPane();
+                    optionPane.setMessage("Funcionário cadastrado com sucesso!");
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = optionPane.createDialog(null, "Sucesso");
+                    dialog.setVisible(true);
+                    carregarTabela();
+                    limparCampos();
+                } else {
+                    JOptionPane optionPane = new JOptionPane();
+                    optionPane.setMessage("Erro ao cadastrar funcionário");
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = optionPane.createDialog(null, "Atenção");
+                    dialog.setVisible(true);
+                }
+                
+            } catch(Exception ex){
+                JOptionPane optionPane = new JOptionPane();
+                optionPane.setMessage("Erro ao cadastrar usuário: " + ex);
+                optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                JDialog dialog = optionPane.createDialog(null, "Atenção");
+                dialog.setVisible(true);
+            }
         }
+        
 
     }//GEN-LAST:event_btnCadastrarCadastrarUsuario
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        // TODO add your handling code here:
+        frmLogin login = new frmLogin();
+        login.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,13 +381,15 @@ public class frmFuncionario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmFuncionario().setVisible(true);
+                classUsuario usuario = new classUsuario();
+                new frmFuncionario(usuario).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JPanel frmFuncionario;
     private javax.swing.JLabel jLabel1;
@@ -231,8 +397,11 @@ public class frmFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblLogado;
+    private javax.swing.JTable tbFuncionarios;
     private javax.swing.JFormattedTextField txtAdmissao;
+    private javax.swing.JFormattedTextField txtDinheiro;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 }

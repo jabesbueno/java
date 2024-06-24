@@ -45,9 +45,9 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,9 +77,6 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
         txtEmail.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
         txtEmail.setName("txtEmail"); // NOI18N
 
-        txtSenha.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
-        txtSenha.setName("txtSenha"); // NOI18N
-
         btnCadastrar.setBackground(new java.awt.Color(0, 204, 204));
         btnCadastrar.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
         btnCadastrar.setText("Cadastrar");
@@ -99,6 +96,8 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
+
+        txtPassword.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout frmCadastroUsuarioLayout = new javax.swing.GroupLayout(frmCadastroUsuario);
         frmCadastroUsuario.setLayout(frmCadastroUsuarioLayout);
@@ -123,9 +122,9 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(frmCadastroUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtEmail)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                                     .addComponent(txtNome)
-                                    .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))))
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING))))
                         .addGap(0, 79, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -145,11 +144,11 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
                     .addGroup(frmCadastroUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)))
-                .addGap(34, 34, 34)
+                .addGap(37, 37, 37)
                 .addGroup(frmCadastroUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(frmCadastroUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
                     .addComponent(btnLogin))
@@ -175,7 +174,7 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
         //Validando campos preenchidos
         String nome = txtNome.getText();
         String email = txtEmail.getText();
-        String senha = txtSenha.getText();
+        String senha = txtPassword.getText();
         
         //Validando campos preenchidos
         if(nome.equals("") || email.equals("") || senha.equals(""))
@@ -214,7 +213,6 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
                 JDialog dialog = optionPane.createDialog(null, "Atenção");
                 dialog.setVisible(true);
             }
-            
         }
         
         
@@ -223,7 +221,6 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         frmLogin login = new frmLogin();
- 
         login.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -273,6 +270,6 @@ public class frmCadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

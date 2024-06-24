@@ -4,6 +4,8 @@
  */
 package Views;
 
+import Controllers.controllerUsuario;
+import Models.classUsuario;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -42,9 +44,9 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
         btnUsuario = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,9 +68,6 @@ public class frmLogin extends javax.swing.JFrame {
         txtEmail.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
         txtEmail.setName("txtEmail"); // NOI18N
 
-        txtSenha.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
-        txtSenha.setName("txtSenha"); // NOI18N
-
         btnEntrar.setBackground(new java.awt.Color(0, 204, 204));
         btnEntrar.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
         btnEntrar.setText("Entrar");
@@ -88,6 +87,8 @@ public class frmLogin extends javax.swing.JFrame {
                 btnUsuarioActionPerformed(evt);
             }
         });
+
+        txtPassword.setFont(new java.awt.Font("Marker Felt", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout frmLoginLayout = new javax.swing.GroupLayout(frmLogin);
         frmLogin.setLayout(frmLoginLayout);
@@ -110,9 +111,9 @@ public class frmLogin extends javax.swing.JFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(frmLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))))
+                                .addGroup(frmLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                                    .addComponent(txtPassword))))
                         .addGap(0, 79, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -125,11 +126,11 @@ public class frmLogin extends javax.swing.JFrame {
                 .addGroup(frmLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(40, 40, 40)
+                .addGap(43, 43, 43)
                 .addGroup(frmLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(frmLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUsuario)
                     .addComponent(btnEntrar))
@@ -161,7 +162,7 @@ public class frmLogin extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
         String email = txtEmail.getText();
-        String senha = txtSenha.getText();
+        String senha = txtPassword.getText();
         
         //Validando campos preenchidos
         if(email.equals("") || senha.equals(""))
@@ -171,7 +172,33 @@ public class frmLogin extends javax.swing.JFrame {
             optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
             JDialog dialog = optionPane.createDialog(null, "Atenção");
             dialog.setVisible(true);
+        } else {
+            try{
+                controllerUsuario controller = new controllerUsuario();
+                classUsuario usuario = new classUsuario();
+                usuario = controller.logar(email, senha);
+                if(usuario.getNome() != null){
+                    frmFuncionario funcionario = new frmFuncionario(usuario);
+                    funcionario.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane optionPane = new JOptionPane();
+                    optionPane.setMessage("Email ou senha incorreta!");
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = optionPane.createDialog(null, "Atenção");
+                    dialog.setVisible(true);
+                }
+                
+            } catch(Exception ex){
+                JOptionPane optionPane = new JOptionPane();
+                optionPane.setMessage("Erro ao efetuar Login: " + ex);
+                optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                JDialog dialog = optionPane.createDialog(null, "Atenção");
+                dialog.setVisible(true);
+            }
         }
+        
+        
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
@@ -217,6 +244,6 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
